@@ -25,12 +25,15 @@ chmod +x due
 ```
 
 # Usage
-This command takes no additional arguments, simply run:
+Default behaviour displays tasks that are overdue or due today:
 ```
 todo.sh due
 ```
 
-This will print to the terminal in separate blocks tasks that are overdue and those that are due today.
+An optional argument of an integer n will also print the tasks due in the next n days (not including today). For example, to also see tasks due in the next week:
+```
+todo.sh due 7
+```
 
 # Compatibility
 Tested with todo.txt_cli-2.9 on macOS 10.12.3

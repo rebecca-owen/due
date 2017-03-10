@@ -8,13 +8,14 @@ Copyright (c) 2017 Rebecca Morgan. All rights reserved.
 
 import os
 import sys
-from datetime import datetime
+from datetime import datetime, timedelta
 import re
 
-def main(todo_dir):
+def main(todo_dir, future_days = 0):
     # Prepare lists to store tasks
     overdue = list()
     due_today = list()
+    due_future = list()
 
     # Open todo.txt file
     with open(os.path.join(todo_dir,'todo.txt'), 'r') as f:
@@ -33,28 +34,39 @@ def main(todo_dir):
                     overdue.append(str(i+1) + " " + task)
                 elif date == datetime.today().date():
                     due_today.append(str(i+1) + " " + task)
+                elif date < datetime.today().date() + timedelta(days=future_days+1):
+                    due_future.append(str(i+1) + " " + task)
 
     # Print to console
     if len(overdue) > 0:
-        print "================="
+        print "==============================="
         print "Overdue tasks:"
-        print "================="
+        print "==============================="
         for task in overdue:
             print task,
     if len(due_today) > 0:
-        print "================="
+        print "==============================="
         print "Tasks due today:"
-        print "================="
+        print "==============================="
         for task in due_today:
+            print task,
+    if len(due_future) > 0:
+        print "==============================="
+        print "Tasks due in the next " + str(future_days) + " days:"
+        print "==============================="
+        for task in due_future:
             print task,
 
 if __name__ == '__main__':
     if len(sys.argv) < 2:
-        print "Usage: due.py [TODO_DIR]"
+        print "Usage: due.py [TODO_DIR] <future_days>"
         sys.exit(1)
 
     if os.path.isdir(sys.argv[1]):
-        main(sys.argv[1])
+        if len(sys.argv) is 3:
+            main(sys.argv[1], int(sys.argv[2]))
+        else:
+            main(sys.argv[1])
     else:
         print "Error: %s is not a directory" % sys.argv[1]
         sys.exit(1)
