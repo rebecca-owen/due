@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+action=$1
+shift
+
+[ "$action" = "usage" ] && {
+  echo "  Visualize tasks due today or in the past:"
+  echo "    due"
+  echo "      generates a list tasks due today or overdue"
+  echo ""
+  exit
+}
+
+[ "$action" = "due" ] && {
+     python ${TODO_ACTIONS_DIR}/due/due.py "$TODO_DIR"
+}
