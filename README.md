@@ -16,12 +16,22 @@ cd ~/.todo.actions.d
 
 Clone this directory into a new directory `due`:
 ```
-git clone https://github.com/rebeccamorgan/due.git due
+git clone https://github.com/rebeccamorgan/due.git due.git
 ```
 
-Now `cd` into this new `due` directory and make the shell script executable:
+Move the `due` and `due.py` scripts out of `due.git` directory:
+```
+mv ./due.git/due ./due.git/due.py ./
+```
+
+Now make the `due` shell script executable:
 ```
 chmod +x due
+```
+
+Finally, remove the repo directory `due.git`:
+```
+rm -rf ./due.git
 ```
 
 # Usage
