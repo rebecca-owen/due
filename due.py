@@ -31,11 +31,11 @@ def main(todo_dir, future_days = 0):
 
                 # Add matching tasks to list with line number
                 if date < datetime.today().date():
-                    overdue.append(str(i+1) + " " + task)
+                    overdue.append(str(i+1).zfill(2) + " " + task)
                 elif date == datetime.today().date():
-                    due_today.append(str(i+1) + " " + task)
+                    due_today.append(str(i+1).zfill(2) + " " + task)
                 elif date < datetime.today().date() + timedelta(days=future_days+1):
-                    due_future.append(str(i+1) + " " + task)
+                    due_future.append(str(i+1).zfill(2) + " " + task)
 
     # Print to console
     if len(overdue) > 0:

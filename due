@@ -14,5 +14,5 @@ shift
 }
 
 [ "$action" = "due" ] && {
-     python ${TODO_ACTIONS_DIR}/due/due.py "$TODO_DIR" $flag
+     python ${TODO_ACTIONS_DIR}/due.py "$TODO_DIR" $flag
 }
