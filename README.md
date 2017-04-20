@@ -14,24 +14,14 @@ into your `.todo.actions.d` directory. The default location is within `$HOME`:
 cd ~/.todo.actions.d
 ```
 
-Clone this directory into a new directory `due`:
+Clone this repository:
 ```
-git clone https://github.com/rebeccamorgan/due.git due.git
-```
-
-Move the `due` and `due.py` scripts out of `due.git` directory:
-```
-mv ./due.git/due ./due.git/due.py ./
+git clone https://github.com/rebeccamorgan/due.git
 ```
 
 Now make the `due` shell script executable:
 ```
 chmod +x due
-```
-
-Finally, remove the repo directory `due.git`:
-```
-rm -rf ./due.git
 ```
 
 # Usage
