@@ -8,7 +8,7 @@ due:YYYY-MM-DD
 
 # Installation
 
-Following [Installing Add-ons](https://github.com/ginatrapani/todo.txt-cli/wiki/Creating-and-Installing-Add-ons), first `cd`
+In order to install actions in sub-directories of the add-on directory, please use todo.txt [version 2.10](https://github.com/ginatrapani/todo.txt-cli/releases/tag/v2.10). Following [Installing Add-ons](https://github.com/ginatrapani/todo.txt-cli/wiki/Creating-and-Installing-Add-ons), first `cd`
 into your `.todo.actions.d` directory. The default location is within `$HOME`:
 ```
 cd ~/.todo.actions.d
@@ -36,5 +36,5 @@ todo.sh due 7
 ```
 
 # Compatibility
-Tested with todo.txt_cli-2.9 on macOS 10.12.3
+Tested with todo.txt_cli-2.9 on macOS 10.12.3 and todo.txt_cli-2.10 on Ubuntu
 
