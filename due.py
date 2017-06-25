@@ -4,6 +4,9 @@ due.py
 Python 2 script for todo.txt add-on
 Created by Rebecca Morgan 2017-03-10
 Copyright (c) 2017 Rebecca Morgan. All rights reserved.
+
+Edits by Steve Winslow 2017-06-25
+Edits copyright (c) 2017 Steve Winslow. Licensed under MIT.
 """
 
 import os
@@ -11,14 +14,14 @@ import sys
 from datetime import datetime, timedelta
 import re
 
-def main(todo_dir, future_days = 0):
+def main(todo_file, future_days = 0):
     # Prepare lists to store tasks
     overdue = list()
     due_today = list()
     due_future = list()
 
     # Open todo.txt file
-    with open(os.path.join(todo_dir,'todo.txt'), 'r') as f:
+    with open(todo_file, 'r') as f:
         content = f.readlines()
         date = datetime.today()
 
@@ -58,15 +61,15 @@ def main(todo_dir, future_days = 0):
             print task,
 
 if __name__ == '__main__':
-    if len(sys.argv) < 2:
-        print "Usage: due.py [TODO_DIR] <future_days>"
+    if len(sys.argv) < 2 or len(sys.argv) > 3:
+        print "Usage: due.py [TODO_FILE] <future_days>"
         sys.exit(1)
 
-    if os.path.isdir(sys.argv[1]):
+    if os.path.isfile(sys.argv[1]):
         if len(sys.argv) is 3:
             main(sys.argv[1], int(sys.argv[2]))
         else:
             main(sys.argv[1])
     else:
-        print "Error: %s is not a directory" % sys.argv[1]
+        print "Error: %s is not a file" % sys.argv[1]
         sys.exit(1)
