@@ -14,31 +14,41 @@ import sys
 from datetime import datetime, timedelta
 import re
 
-def main(todo_file, future_days = 0):
+
+def main(todo_file, future_days=0):
     # Prepare lists to store tasks
     overdue = list()
     due_today = list()
     due_future = list()
+    tasks_with_date = list()
 
     # Open todo.txt file
     with open(todo_file, 'r') as f:
         content = f.readlines()
         date = datetime.today()
 
-        # Loop through content and look for due dates, assuming the key due: is used and standard date format
+        # Loop through content and look for due dates, assuming the key due:
+        # is used and standard date format
         for i, task in enumerate(content):
             match = re.search(r'due:\d{4}-\d{2}-\d{2}', task)
 
             if match is not None:
                 date = datetime.strptime(match.group()[4:], '%Y-%m-%d').date()
+                tasks_with_date.append((i, task, date))
 
+        # Sort tasks that match due: regex by date
+        sorted_tasks = sorted(tasks_with_date, key=lambda tup: tup[2])
+
+        # Append to relevant lists for output
+        for task in sorted_tasks:
                 # Add matching tasks to list with line number
-                if date < datetime.today().date():
-                    overdue.append(str(i+1).zfill(2) + " " + task)
-                elif date == datetime.today().date():
-                    due_today.append(str(i+1).zfill(2) + " " + task)
-                elif date < datetime.today().date() + timedelta(days=future_days+1):
-                    due_future.append(str(i+1).zfill(2) + " " + task)
+                if task[2] < datetime.today().date():
+                    overdue.append(str(task[0]+1).zfill(2) + " " + task[1])
+                elif task[2] == datetime.today().date():
+                    due_today.append(str(task[0]+1).zfill(2) + " " + task[1])
+                elif task[2] < datetime.today().date() + \
+                        timedelta(days=future_days + 1):
+                    due_future.append(str(task[0]+1).zfill(2) + " " + task[1])
 
     # Print to console
     if len(overdue) > 0:
@@ -48,17 +58,18 @@ def main(todo_file, future_days = 0):
         for task in overdue:
             print task,
     if len(due_today) > 0:
-        print "==============================="
+        print "\n==============================="
         print "Tasks due today:"
         print "==============================="
         for task in due_today:
             print task,
     if len(due_future) > 0:
-        print "==============================="
+        print "\n==============================="
         print "Tasks due in the next " + str(future_days) + " days:"
         print "==============================="
         for task in due_future:
             print task,
+
 
 if __name__ == '__main__':
     if len(sys.argv) < 2 or len(sys.argv) > 3:
