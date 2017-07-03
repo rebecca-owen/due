@@ -52,28 +52,28 @@ def main(todo_file, future_days=0):
 
     # Print to console
     if len(overdue) > 0:
-        print "==============================="
-        print "Overdue tasks:"
-        print "==============================="
+        print ("===============================")
+        print ("Overdue tasks:")
+        print ("===============================")
         for task in overdue:
-            print task,
+            print (task,)
     if len(due_today) > 0:
-        print "\n==============================="
-        print "Tasks due today:"
-        print "==============================="
+        print ("\n===============================")
+        print ("Tasks due today:")
+        print ("===============================")
         for task in due_today:
-            print task,
+            print (task,)
     if len(due_future) > 0:
-        print "\n==============================="
-        print "Tasks due in the next " + str(future_days) + " days:"
-        print "==============================="
+        print ("\n===============================")
+        print ("Tasks due in the next " + str(future_days) + " days:")
+        print ("===============================")
         for task in due_future:
-            print task,
+            print (task,)
 
 
 if __name__ == '__main__':
     if len(sys.argv) < 2 or len(sys.argv) > 3:
-        print "Usage: due.py [TODO_FILE] <future_days>"
+        print ("Usage: due.py [TODO_FILE] <future_days>")
         sys.exit(1)
 
     if os.path.isfile(sys.argv[1]):
@@ -82,5 +82,5 @@ if __name__ == '__main__':
         else:
             main(sys.argv[1])
     else:
-        print "Error: %s is not a file" % sys.argv[1]
+        print ("Error: %s is not a file") % sys.argv[1]
         sys.exit(1)
