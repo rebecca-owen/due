@@ -17,9 +17,10 @@ import re
 
 def main(todo_file, future_days=0):
     # Prepare lists to store tasks
-    overdue = list()
-    due_today = list()
-    due_future = list()
+    overdue         = list()
+    due_today       = list()
+    due_tmr         = list()
+    due_future      = list()
     tasks_with_date = list()
 
     # Open todo.txt file
@@ -46,6 +47,8 @@ def main(todo_file, future_days=0):
                 overdue.append(str(task[0]+1).zfill(2) + " " + task[1])
             elif task[2] == datetime.today().date():
                 due_today.append(str(task[0]+1).zfill(2) + " " + task[1])
+            elif task[2] == datetime.today().date() + timedelta(days=1):
+                due_tmr.append(str(task[0]+1).zfill(2) + " " + task[1])
             elif task[2] < datetime.today().date() + \
                     timedelta(days=future_days + 1):
                 due_future.append(str(task[0]+1).zfill(2) + " " + task[1])
@@ -63,9 +66,15 @@ def main(todo_file, future_days=0):
         print(  "===============================")
         for task in due_today:
             print(task, end='')
+    if len(due_tmr) > 0:
+        print("\n===============================")
+        print(  "Tasks due tomorrow:"            )
+        print(  "===============================")
+        for task in due_tmr:
+            print(task, end='')
     if len(due_future) > 0:
         print("\n===============================")
-        print(  "Tasks due in the next " + str(future_days) + " days:")
+        print(  "Tasks due in the following " + str(future_days - 1) + " days:")
         print(  "===============================")
         for task in due_future:
             print(task, end='')
