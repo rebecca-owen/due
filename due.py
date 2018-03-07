@@ -1,7 +1,7 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 """
 due.py
-Python 3 script for todo.txt add-on
+Python 2/3 script for todo.txt add-on
 Created by Rebecca Morgan 2017-03-10
 Copyright (c) 2017 Rebecca Morgan. All rights reserved.
 
@@ -9,11 +9,12 @@ Edits by Steve Winslow 2017-06-25
 Edits copyright (c) 2017 Steve Winslow. Licensed under MIT.
 """
 
+from __future__ import print_function
+
 import os
 import sys
 from datetime import datetime, timedelta
 import re
-
 
 def main(todo_file, future_days=0):
     # Prepare lists to store tasks
