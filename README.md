@@ -25,7 +25,7 @@ chmod +x due
 ```
 
 # Usage
-Default behaviour displays tasks that are overdue or due today:
+Default behaviour displays tasks that are overdue, due today or due tomorrow:
 ```
 todo.sh due
 ```
@@ -36,5 +36,5 @@ todo.sh due 7
 ```
 
 # Compatibility
-Tested with todo.txt_cli-2.9 on macOS 10.12.3 and todo.txt_cli-2.10 on Ubuntu
+Tested with todo.txt_cli-2.9 on macOS 10.12.3 and todo.txt_cli-2.10 on Ubuntu. 
 
