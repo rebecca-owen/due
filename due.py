@@ -31,11 +31,12 @@ def main(todo_file, future_days=0):
 
         # Loop through content and look for due dates, assuming the key due:
         # is used and standard date format
+        key = os.getenv('TODO_TXT_DUE_KEY', 'due')
         for i, task in enumerate(content):
-            match = re.search(r'due:\d{4}-\d{2}-\d{2}', task)
+            match = re.search(r'%s:(\d{4}-\d{2}-\d{2})' % key, task)
 
             if match is not None:
-                date = datetime.strptime(match.group()[4:], '%Y-%m-%d').date()
+                date = datetime.strptime(match.group(1), '%Y-%m-%d').date()
                 tasks_with_date.append((i, task, date))
 
         # Sort tasks that match due: regex by date
