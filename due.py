@@ -16,6 +16,23 @@ import sys
 from datetime import datetime, timedelta
 import re
 
+
+def task_print(task):
+    match = re.search(r'\s\(([A-Z])\)\s', task)
+
+    if match is None:
+        print(task, end='')
+    else:
+        pri = match.group(1)
+        color = os.getenv('PRI_' + pri)
+
+        if color is None:
+            color = os.getenv('PRI_X')
+
+        color = eval('u"'+color[1:]+'"')
+        print(color + task + '\033[0m', end='')
+
+
 def main(todo_file, future_days=0):
     # Prepare lists to store tasks
     overdue         = list()
@@ -61,25 +78,25 @@ def main(todo_file, future_days=0):
         print("Overdue tasks:"                 )
         print("===============================")
         for task in overdue:
-            print(task, end='')
+            task_print(task)
     if len(due_today) > 0:
         print("\n===============================")
         print(  "Tasks due today:"               )
         print(  "===============================")
         for task in due_today:
-            print(task, end='')
+            task_print(task)
     if len(due_tmr) > 0:
         print("\n===============================")
         print(  "Tasks due tomorrow:"            )
         print(  "===============================")
         for task in due_tmr:
-            print(task, end='')
+            task_print(task)
     if len(due_future) > 0:
         print("\n===============================")
         print(  "Tasks due in the following " + str(future_days - 1) + " days:")
         print(  "===============================")
         for task in due_future:
-            print(task, end='')
+            task_print(task)
 
 
 if __name__ == '__main__':
