@@ -17,6 +17,7 @@ import sys
 import math
 from datetime import datetime, timedelta
 import re
+from pprint import pprint
 
 
 def task_print(task):
@@ -58,10 +59,10 @@ def main(todo_file, future_days=0):
 
             if match:
                 date = datetime.strptime(match[0][1], "%Y-%m-%d").date()
-                tasks_with_date.append((i, task, date, match[0][0]))
+                tasks_with_date.append((i, task, date))
 
-        # Sort tasks that match due: regex by date, then priority
-        sorted_tasks = sorted(tasks_with_date, key=lambda tup: (tup[2], tup[3]))
+        # Sort tasks with a due date: regex by date, then priority
+        sorted_tasks = sorted(tasks_with_date, key=lambda tup: (tup[2], tup[1]))
         zero_pad = int(math.log10(len(content))) + 1
 
         # Append to relevant lists for output
