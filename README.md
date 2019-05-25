@@ -5,6 +5,7 @@ In order to use this plugin, tasks must be added with due dates in the format:
 ```
 due:YYYY-MM-DD
 ```
+Note that the keyword 'due' can be modified by setting the TODO_TXT_DUE_KEY environment variable.
 
 # Installation
 
