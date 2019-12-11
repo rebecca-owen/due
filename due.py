@@ -7,6 +7,9 @@ Copyright (c) 2017 Rebecca Morgan. All rights reserved.
 
 Edits by Steve Winslow 2017-06-25
 Edits copyright (c) 2017 Steve Winslow. Licensed under MIT.
+
+Edits by Matias Vidal matias@m01.cl 2019-12-11
+Edits copyright (c) 2019 Matias Vidal. Licensed under MIT.
 """
 
 from __future__ import print_function
@@ -79,25 +82,25 @@ def main(todo_file, future_days=0):
     # Print to console
     if len(overdue) > 0:
         print("===============================")
-        print("Overdue tasks:")
+        print("Overdue tasks: %i" % (len(overdue)))
         print("===============================")
         for task in overdue:
             task_print(task)
     if len(due_today) > 0:
         print("\n===============================")
-        print("Tasks due today:")
+        print("Tasks due today: %i" % (len(due_today)))
         print("===============================")
         for task in due_today:
             task_print(task)
     if len(due_tmr) > 0:
         print("\n===============================")
-        print("Tasks due tomorrow:")
+        print("Tasks due tomorrow: %i" % (len(due_tmr)))
         print("===============================")
         for task in due_tmr:
             task_print(task)
     if len(due_future) > 0:
         print("\n===============================")
-        print("Tasks due in the following " + str(future_days - 1) + " days:")
+        print("Tasks due in the following %s days: %i" % (str(future_days - 1), len(due_future)))
         print("===============================")
         for task in due_future:
             task_print(task)
