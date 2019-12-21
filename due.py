@@ -109,7 +109,7 @@ if __name__ == "__main__":
         sys.exit(1)
 
     if os.path.isfile(sys.argv[1]):
-        if len(sys.argv) is 3:
+        if len(sys.argv) == 3:
             main(sys.argv[1], int(sys.argv[2]))
         else:
             main(sys.argv[1])
