@@ -53,7 +53,7 @@ def main(todo_file, future_days=0):
 
         for i, task in enumerate(content):
             match = re.findall(
-                 r"%s:(\d{4}-\d{2}-\d{2})" % key, task
+                r"%s:(\d{4}-\d{2}-\d{2})" % key, task
             )
 
             if match:
