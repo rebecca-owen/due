@@ -1,16 +1,13 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 """
 due.py
-Python 2/3 script for todo.txt add-on
+Python3 script for todo.txt add-on
 Created by Rebecca Morgan 2017-03-10
-Copyright (c) 2017 Rebecca Morgan. All rights reserved.
+Copyright (c) 2017 Rebecca Morgan. Licensed under MIT.
 
 Edits by Steve Winslow 2017-06-25
 Edits copyright (c) 2017 Steve Winslow. Licensed under MIT.
 """
-
-from __future__ import print_function
-from __future__ import division
 
 import os
 import sys
@@ -20,6 +17,12 @@ import re
 
 
 def task_print(task):
+    """
+    Print the task string, coloring according to priority if set.
+
+    Argument: task
+        Task string
+    """
     match = re.search(r"\s\(([A-Z])\)\s", task)
 
     if match is None:
@@ -27,15 +30,24 @@ def task_print(task):
     else:
         pri = match.group(1)
         color = os.getenv("PRI_" + pri)
-
         if color is None:
             color = os.getenv("PRI_X")
-
         color = eval('u"' + color[1:] + '"')
         print(color + task + "\033[0m", end="")
 
 
-def main(todo_file, future_days=0):
+def main(todo_file, future_days=1):
+    """
+    Print task information, sorted by due date.
+
+    Argument: todo_file
+        The path to the todo.txt file
+
+    Argument: future_days (default: 1)
+        Number of days in the future to consider due dates to print.
+        Default behaviour includes tasks due tomorrow - this can be
+        overriden by passing 0.
+    """
     # Prepare lists to store tasks
     overdue = list()
     due_today = list()
@@ -52,9 +64,7 @@ def main(todo_file, future_days=0):
         key = os.getenv("TODO_TXT_DUE_KEY", "due")
 
         for i, task in enumerate(content):
-            match = re.findall(
-                r"%s:(\d{4}-\d{2}-\d{2})" % key, task
-            )
+            match = re.findall(r"%s:(\d{4}-\d{2}-\d{2})" % key, task)
 
             if match:
                 date = datetime.strptime(match[0], "%Y-%m-%d").date()
@@ -78,27 +88,27 @@ def main(todo_file, future_days=0):
 
     # Print to console
     if len(overdue) > 0:
-        print("===============================")
+        print("===================================")
         print("Overdue tasks:")
-        print("===============================")
+        print("===================================")
         for task in overdue:
             task_print(task)
     if len(due_today) > 0:
-        print("\n===============================")
+        print("\n===================================")
         print("Tasks due today:")
-        print("===============================")
+        print("===================================")
         for task in due_today:
             task_print(task)
-    if len(due_tmr) > 0:
-        print("\n===============================")
+    if len(due_tmr) > 0 and future_days >= 1:
+        print("\n===================================")
         print("Tasks due tomorrow:")
-        print("===============================")
+        print("===================================")
         for task in due_tmr:
             task_print(task)
     if len(due_future) > 0:
-        print("\n===============================")
-        print("Tasks due in the following " + str(future_days - 1) + " days:")
-        print("===============================")
+        print("\n===================================")
+        print(f"Tasks due in the next {str(future_days)} days:")
+        print("===================================")
         for task in due_future:
             task_print(task)
 
@@ -110,9 +120,13 @@ if __name__ == "__main__":
 
     if os.path.isfile(sys.argv[1]):
         if len(sys.argv) == 3:
-            main(sys.argv[1], int(sys.argv[2]))
+            if str.isdigit(sys.argv[2]):
+                main(sys.argv[1], int(sys.argv[2]))
+            else:
+                print(f"Error: future_days argument '{sys.argv[2]}' is not an integer")
+                sys.exit(1)
         else:
             main(sys.argv[1])
     else:
-        print("Error: %s is not a file" % sys.argv[1])
+        print(f"Error: {sys.argv[1]} is not a file")
         sys.exit(1)

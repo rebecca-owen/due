@@ -1,5 +1,5 @@
 # due
-A [todo.txt](http://todotxt.com/) plugin to display your due and overdue tasks using Python 2/3.
+A [todo.txt](http://todotxt.com/) plugin to display your due and overdue tasks using Python 3.
 
 In order to use this plugin, tasks must be added with due dates in the format:
 ```
@@ -35,7 +35,4 @@ An optional argument of an integer n will also print the tasks due in the next n
 ```
 todo.sh due 7
 ```
-
-# Compatibility
-Tested with todo.txt_cli-2.9 on macOS 10.12.3 and todo.txt_cli-2.10 on Ubuntu. 
-
+Passing a value of 0 will show only tasks overdue or due today, omitting tasks due tomorrow.
