@@ -53,11 +53,11 @@ def main(todo_file, future_days=0):
 
         for i, task in enumerate(content):
             match = re.findall(
-                r"(\([A-Z]\))?[A-Za-z0-9+@\s]+%s:(\d{4}-\d{2}-\d{2})" % key, task
+                r"%s:(\d{4}-\d{2}-\d{2})" % key, task
             )
 
             if match:
-                date = datetime.strptime(match[0][1], "%Y-%m-%d").date()
+                date = datetime.strptime(match[0], "%Y-%m-%d").date()
                 tasks_with_date.append((i, task, date))
 
         # Sort tasks with a due date: regex by date, then priority
