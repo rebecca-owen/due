@@ -14,5 +14,5 @@ shift
 }
 
 [ "$action" = "due" ] && {
-     python $(dirname $0)/due.py "$TODO_FILE" $flag
+     python3 $(dirname $0)/due.py "$TODO_FILE" $flag
 }
