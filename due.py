@@ -53,7 +53,7 @@ def main(todo_file, future_days=1):
     due_today = list()
     due_tmr = list()
     due_future = list()
-    tasks_with_date = list()
+    tasks_with_date = dict()  # key: (task id, task text); value: date (ISO string)
 
     # Open todo.txt file
     with open(todo_file, "r") as f:
@@ -61,17 +61,21 @@ def main(todo_file, future_days=1):
         date = datetime.today()
 
         # Loop through content and look for due dates, assuming standard date format
-        key = os.getenv("TODO_TXT_DUE_KEY", "due")
+        keys = os.getenv("TODO_TXT_DUE_KEY", "due t").split()
 
-        for i, task in enumerate(content):
-            match = re.findall(r"%s:(\d{4}-\d{2}-\d{2})" % key, task)
+        for key in keys:
+            for i, task in enumerate(content):
+                match = re.findall(r"%s:(\d{4}-\d{2}-\d{2})" % key, task)
 
-            if match:
-                date = datetime.strptime(match[0], "%Y-%m-%d").date()
-                tasks_with_date.append((i, task, date))
+                if match:
+                    date = datetime.strptime(match[0], "%Y-%m-%d").date()
+                    existing_date = tasks_with_date.get((i, task), date)
+                    date = min(date, existing_date)  # will sort on earliest date
+                    tasks_with_date[(i, task)] = date
 
         # Sort tasks with a due date: regex by date, then priority
-        sorted_tasks = sorted(tasks_with_date, key=lambda tup: (tup[2], tup[1]))
+        tasks_with_date_flat = [(*k,v) for (k,v) in tasks_with_date.items()]
+        sorted_tasks = sorted(tasks_with_date_flat, key=lambda tup: (tup[2], tup[1]))
         zero_pad = int(math.log10(len(content))) + 1
 
         # Append to relevant lists for output
