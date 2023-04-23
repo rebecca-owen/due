@@ -55,6 +55,8 @@ def main(todo_file, future_days=1):
     due_future = list()
     tasks_with_date = list()
 
+    verbose = int(os.getenv("TODOTXT_VERBOSE"))
+
     # Open todo.txt file
     with open(todo_file, "r") as f:
         content = f.readlines()
@@ -88,27 +90,31 @@ def main(todo_file, future_days=1):
 
     # Print to console
     if len(overdue) > 0:
-        print("===================================")
-        print("Overdue tasks:")
-        print("===================================")
+        if verbose > 0:
+            print("===================================")
+            print("Overdue tasks:")
+            print("===================================")
         for task in overdue:
             task_print(task)
     if len(due_today) > 0:
-        print("\n===================================")
-        print("Tasks due today:")
-        print("===================================")
+        if verbose > 0:
+            print("\n===================================")
+            print("Tasks due today:")
+            print("===================================")
         for task in due_today:
             task_print(task)
     if len(due_tmr) > 0 and future_days >= 1:
-        print("\n===================================")
-        print("Tasks due tomorrow:")
-        print("===================================")
+        if verbose > 0:
+            print("\n===================================")
+            print("Tasks due tomorrow:")
+            print("===================================")
         for task in due_tmr:
             task_print(task)
     if len(due_future) > 0:
-        print("\n===================================")
-        print(f"Tasks due in the next {str(future_days)} days:")
-        print("===================================")
+        if verbose > 0:
+            print("\n===================================")
+            print(f"Tasks due in the next {str(future_days)} days:")
+            print("===================================")
         for task in due_future:
             task_print(task)
 
